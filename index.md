@@ -169,31 +169,26 @@
               </filter>
             </defs>
             <g transform="translate(100,100)">
-              <!-- teeth: 16 rectangles rotated -->
-              <g fill="none" stroke="none">
-                <g fill="var(--gear)">
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(0)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(22.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(45)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(67.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(90)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(112.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(135)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(157.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(180)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(202.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(225)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(247.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(270)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(292.5)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(315)"></rect>
-                  <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(337.5)"></rect>
-                </g>
+              <g fill="var(--gear)">
+                <!-- 16 teeth -->
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(0)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(22.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(45)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(67.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(90)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(112.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(135)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(157.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(180)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(202.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(225)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(247.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(270)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(292.5)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(315)"></rect>
+                <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(337.5)"></rect>
               </g>
-
-              <!-- main gear body -->
               <circle r="72" fill="var(--gear)" style="filter:url(#gShadow)" opacity="0.98"></circle>
-              <!-- inner ring to suggest depth -->
               <circle r="44" fill="#000"></circle>
               <circle r="12" fill="var(--gold)"></circle>
             </g>
@@ -209,8 +204,8 @@
               </filter>
             </defs>
             <g transform="translate(150,150)">
-              <!-- teeth: 20 rectangles rotated -->
               <g fill="var(--gear)">
+                <!-- 20 teeth -->
                 <rect x="-8" y="-130" width="16" height="36" rx="3" transform="rotate(0)"></rect>
                 <rect x="-8" y="-130" width="16" height="36" rx="3" transform="rotate(18)"></rect>
                 <rect x="-8" y="-130" width="16" height="36" rx="3" transform="rotate(36)"></rect>
@@ -232,8 +227,6 @@
                 <rect x="-8" y="-130" width="16" height="36" rx="3" transform="rotate(324)"></rect>
                 <rect x="-8" y="-130" width="16" height="36" rx="3" transform="rotate(342)"></rect>
               </g>
-
-              <!-- main gear body large -->
               <circle r="120" fill="var(--gear)" style="filter:url(#gShadow2)" opacity="0.98"></circle>
               <circle r="68" fill="#000"></circle>
               <circle r="18" fill="var(--gold)"></circle>
@@ -263,7 +256,6 @@
                 <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(315)"></rect>
                 <rect x="-6" y="-92" width="12" height="28" rx="3" transform="rotate(337.5)"></rect>
               </g>
-
               <circle r="72" fill="var(--gear)" opacity="0.98"></circle>
               <circle r="44" fill="#000"></circle>
               <circle r="12" fill="var(--gold)"></circle>
@@ -297,7 +289,7 @@
     /* ---------------- create many tiny filled gold bubbles ---------------- */
     (function createBubbles(){
       const container = document.getElementById('bg-bubbles');
-      const COUNT = 60; // density
+      const COUNT = 60;
       const minSize = 4, maxSize = 8;
       for (let i=0;i<COUNT;i++){
         const n = document.createElement('div');
@@ -305,21 +297,15 @@
         const s = Math.floor(Math.random()*(maxSize-minSize+1))+minSize;
         n.style.width = s + 'px';
         n.style.height = s + 'px';
-        // randomized positions, avoid exact center concentration
-        const left = Math.random() * 100;
-        const top = Math.random() * 100;
-        n.style.left = left + 'vw';
-        n.style.top = top + 'vh';
-        // faster subtle motions
-        const durY = (1.2 + Math.random()*2.2).toFixed(2); // 1.2 - 3.4s
-        const durX = (1.6 + Math.random()*2.8).toFixed(2); // 1.6 - 4.4s
+        n.style.left = (Math.random() * 100) + 'vw';
+        n.style.top  = (Math.random() * 100) + 'vh';
+        const durY = (1.2 + Math.random()*2.2).toFixed(2);
+        const durX = (1.6 + Math.random()*2.8).toFixed(2);
         const delay = (Math.random()*1.2).toFixed(2);
         n.style.animation = `floatFastY ${durY}s ease-in-out ${delay}s infinite alternate, driftFastX ${durX}s ease-in-out ${delay/2}s infinite alternate`;
         n.style.opacity = (0.6 + Math.random()*0.4).toFixed(2);
         container.appendChild(n);
       }
-
-      // nudge positions on resize to keep scattered look
       let t;
       window.addEventListener('resize', function(){
         clearTimeout(t);
@@ -336,12 +322,11 @@
       }, { passive: true });
     })();
 
-    /* ----------------- Very slow counters ------------------
-       User requested: "very very very slow". Set a long duration.
-       Change DURATION_MS to adjust speed:
-       - Current value = 4 hours (14400000 ms) which is extremely slow.
-       - Feel free to reduce if needed.
-    ---------------------------------------------------------*/
+    /* ----------------- Very slow counters using setInterval (efficient) ------------------
+       - DURATION_MS controls how long the counter takes to reach the target.
+       - Currently set to 24 hours (very very slow). Adjust if needed.
+       - Updates every 1 second to keep CPU usage low.
+    ---------------------------------------------------------------------------------------*/
     (function slowCounters(){
       const TARGETS = {
         playbnb: 20000000000,   // 20,000,000,000
@@ -349,36 +334,42 @@
         usd: 12345678           // 12,345,678
       };
 
-      const DURATION_MS = 4 * 60 * 60 * 1000; // 4 hours
+      const DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
-      function easeOutCubic(t){ return 1 - Math.pow(1 - t, 3); }
-
-      function animateValue(element, start, end, duration){
-        const startTime = performance.now();
-        function frame(now){
-          const elapsed = now - startTime;
-          const t = Math.min(1, elapsed / duration);
-          const eased = easeOutCubic(t);
-          const current = Math.floor(start + (end - start) * eased);
-          element.textContent = formatNumber(current);
-          if (t < 1) requestAnimationFrame(frame);
-          else element.textContent = formatNumber(end);
-        }
-        requestAnimationFrame(frame);
-      }
+      const TICK_MS = 1000; // update every second
+      const steps = Math.max(1, Math.ceil(DURATION_MS / TICK_MS));
 
       function formatNumber(n){
-        return n.toLocaleString('en-US');
+        return Math.floor(n).toLocaleString('en-US');
+      }
+
+      function startCounter(el, target, startDelay = 0){
+        let tick = 0;
+        const start = 0;
+        const increment = (target - start) / steps;
+
+        // staggered start
+        setTimeout(()=> {
+          const timer = setInterval(()=>{
+            tick++;
+            const current = start + increment * tick;
+            el.textContent = formatNumber(Math.min(current, target));
+            if (tick >= steps){
+              clearInterval(timer);
+              el.textContent = formatNumber(target);
+            }
+          }, TICK_MS);
+        }, startDelay);
       }
 
       const playEl = document.getElementById('playbnbValue');
       const bnbEl  = document.getElementById('bnbValue');
       const usdEl  = document.getElementById('usdValue');
 
-      // Start animations with little stagger, all extremely long
-      setTimeout(()=> animateValue(playEl, 0, TARGETS.playbnb, DURATION_MS), 200);
-      setTimeout(()=> animateValue(bnbEl, 0, TARGETS.bnb, DURATION_MS + 12000), 800);
-      setTimeout(()=> animateValue(usdEl, 0, TARGETS.usd, DURATION_MS + 24000), 1400);
+      // start counters with small staggers
+      startCounter(playEl, TARGETS.playbnb, 200);
+      startCounter(bnbEl,  TARGETS.bnb,    800);
+      startCounter(usdEl,  TARGETS.usd,   1400);
     })();
   </script>
 </body>
