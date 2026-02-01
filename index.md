@@ -70,10 +70,10 @@
       box-shadow: 0 18px 60px rgba(0,0,0,0.65);
     }
 
-    /* Headline large */
+    /* Headline very large */
     .headline {
       font-weight: 900;
-      font-size: clamp(48px, 10vw, 130px); /* very large */
+      font-size: clamp(84px, 12vw, 200px); /* much larger */
       line-height: 1.02;
       margin: 0 0 20px;
       letter-spacing: -0.02em;
@@ -98,9 +98,9 @@
     .gear-wrap { display:flex; align-items:center; justify-content:center; }
 
     /* sizes for gears (bigger as requested) */
-    .gear-wrap.left  { width: 260px; height: 260px; }
-    .gear-wrap.mid   { width: 360px; height: 360px; }
-    .gear-wrap.right { width: 260px; height: 260px; }
+    .gear-wrap.left  { width: 300px; height: 300px; }
+    .gear-wrap.mid   { width: 420px; height: 420px; }
+    .gear-wrap.right { width: 300px; height: 300px; }
 
     /* CSS rotation for gears - very slow */
     @keyframes spin-ccw { from { transform: rotate(0deg); } to { transform: rotate(-360deg); } }
@@ -130,7 +130,7 @@
     }
     .counter .value {
       font-weight: 900;
-      font-size: clamp(20px, 4.5vw, 34px);
+      font-size: clamp(20px, 4.5vw, 44px);
       color: var(--text);
       margin-bottom: 8px;
       letter-spacing: 0.01em;
@@ -139,9 +139,9 @@
 
     @media (max-width: 820px) {
       .gears { gap: 18px; }
-      .gear-wrap.mid { width: 300px; height: 300px; }
-      .gear-wrap.left, .gear-wrap.right { width: 220px; height: 220px; }
-      .headline { font-size: clamp(42px, 12vw, 72px); }
+      .gear-wrap.mid { width: 320px; height: 320px; }
+      .gear-wrap.left, .gear-wrap.right { width: 240px; height: 240px; }
+      .headline { font-size: clamp(64px, 18vw, 120px); }
     }
 
     /* reduced motion */
@@ -272,12 +272,12 @@
         </div>
 
         <div class="counter" aria-label="BNB amount">
-          <div id="bnbValue" class="value">0</div>
+          <div id="bnbValue" class="value">0.000000</div>
           <div class="label">BNB</div>
         </div>
 
         <div class="counter" aria-label="USD value">
-          <div id="usdValue" class="value">0</div>
+          <div id="usdValue" class="value">0.00</div>
           <div class="label">USD</div>
         </div>
       </div>
@@ -322,54 +322,72 @@
       }, { passive: true });
     })();
 
-    /* ----------------- Very slow counters using setInterval (efficient) ------------------
-       - DURATION_MS controls how long the counter takes to reach the target.
-       - Currently set to 24 hours (very very slow). Adjust if needed.
-       - Updates every 1 second to keep CPU usage low.
+    /* ----------------- Very slow counters using setInterval (24 hours) ------------------
+       - Play BNB target: 890,000,000
+       - BNB target: 1 (shown with 6 decimals while counting)
+       - USD = BNB * 890 (shown with 2 decimals)
+       - DURATION_MS currently 24 hours. Change if you want slower/faster.
     ---------------------------------------------------------------------------------------*/
     (function slowCounters(){
       const TARGETS = {
-        playbnb: 20000000000,   // 20,000,000,000
-        bnb: 25000,             // 25,000
-        usd: 12345678           // 12,345,678
+        playbnb: 890000000, // 890,000,000
+        bnb: 1.0,           // 1 BNB
+        pricePerBnb: 890.0  // 890 USD per BNB
       };
 
       const DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-
       const TICK_MS = 1000; // update every second
       const steps = Math.max(1, Math.ceil(DURATION_MS / TICK_MS));
 
-      function formatNumber(n){
-        return Math.floor(n).toLocaleString('en-US');
-      }
+      // increments per tick
+      const playIncrement = TARGETS.playbnb / steps;
+      const bnbIncrement  = TARGETS.bnb / steps;
 
-      function startCounter(el, target, startDelay = 0){
-        let tick = 0;
-        const start = 0;
-        const increment = (target - start) / steps;
-
-        // staggered start
-        setTimeout(()=> {
-          const timer = setInterval(()=>{
-            tick++;
-            const current = start + increment * tick;
-            el.textContent = formatNumber(Math.min(current, target));
-            if (tick >= steps){
-              clearInterval(timer);
-              el.textContent = formatNumber(target);
-            }
-          }, TICK_MS);
-        }, startDelay);
-      }
-
+      // DOM
       const playEl = document.getElementById('playbnbValue');
       const bnbEl  = document.getElementById('bnbValue');
       const usdEl  = document.getElementById('usdValue');
 
-      // start counters with small staggers
-      startCounter(playEl, TARGETS.playbnb, 200);
-      startCounter(bnbEl,  TARGETS.bnb,    800);
-      startCounter(usdEl,  TARGETS.usd,   1400);
+      let playAcc = 0;
+      let bnbAcc = 0;
+      let step = 0;
+
+      // update display every tick (1s). using setInterval to be CPU-friendly.
+      const timer = setInterval(() => {
+        step++;
+        if (step >= steps) {
+          // ensure final precise values
+          playAcc = TARGETS.playbnb;
+          bnbAcc  = TARGETS.bnb;
+          const usd = bnbAcc * TARGETS.pricePerBnb;
+          playEl.textContent = formatInt(playAcc);
+          bnbEl.textContent  = formatFloat(bnbAcc, 6);
+          usdEl.textContent  = formatFloat(usd, 2);
+          clearInterval(timer);
+          return;
+        }
+
+        // accumulate
+        playAcc += playIncrement;
+        bnbAcc  += bnbIncrement;
+
+        // compute USD from current BNB
+        const usd = bnbAcc * TARGETS.pricePerBnb;
+
+        // render: playbnb as integer, bnb with 6 decimals, usd with 2 decimals
+        playEl.textContent = formatInt(Math.floor(playAcc));
+        bnbEl.textContent  = formatFloat(bnbAcc, 6);
+        usdEl.textContent  = formatFloat(usd, 2);
+
+      }, TICK_MS);
+
+      // formatter helpers
+      function formatInt(n){
+        return Math.floor(n).toLocaleString('en-US');
+      }
+      function formatFloat(v, decimals){
+        return Number(v).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      }
     })();
   </script>
 </body>
